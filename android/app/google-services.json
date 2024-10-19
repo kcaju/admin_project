@@ -1,0 +1,206 @@
+{
+  "project_info": {
+    "project_number": "541107565011",
+    "project_id": "sample-project-591c1",
+    "storage_bucket": "sample-project-591c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541107565011:android:bcb9cfe6f5495f559f3f26",
+        "android_client_info": {
+          "package_name": "com.example.admin_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNyCJ9uYZJdJLc0nAC8sxPuburbTEFmOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "541107565011-b3n8vcm8s59q4vlm7c6kt40fhrub20mi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.petadpotionApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541107565011:android:249bda8e68c915e79f3f26",
+        "android_client_info": {
+          "package_name": "com.example.firebase_sample2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541107565011-oke3kglb5hk9n074ph8o2fiagf2hpuk9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebase_sample2",
+            "certificate_hash": "d589cf72f576317bb2a6314f5eec25e3755ffa83"
+          }
+        },
+        {
+          "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNyCJ9uYZJdJLc0nAC8sxPuburbTEFmOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "541107565011-b3n8vcm8s59q4vlm7c6kt40fhrub20mi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.petadpotionApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541107565011:android:5f7afcdf6bd0679a9f3f26",
+        "android_client_info": {
+          "package_name": "com.example.firebase_sample_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNyCJ9uYZJdJLc0nAC8sxPuburbTEFmOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "541107565011-b3n8vcm8s59q4vlm7c6kt40fhrub20mi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.petadpotionApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541107565011:android:17bd91963e7ce7ac9f3f26",
+        "android_client_info": {
+          "package_name": "com.example.google_signin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541107565011-9p1gcsj3fj4hipkdvkb02bot2gvteqt6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.google_signin",
+            "certificate_hash": "d589cf72f576317bb2a6314f5eec25e3755ffa83"
+          }
+        },
+        {
+          "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNyCJ9uYZJdJLc0nAC8sxPuburbTEFmOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "541107565011-b3n8vcm8s59q4vlm7c6kt40fhrub20mi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.petadpotionApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541107565011:android:5c94780841cd63ef9f3f26",
+        "android_client_info": {
+          "package_name": "com.example.petadpotion_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNyCJ9uYZJdJLc0nAC8sxPuburbTEFmOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541107565011-grkoumjps81up30ri7lm2e84ea8a01dm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "541107565011-b3n8vcm8s59q4vlm7c6kt40fhrub20mi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.petadpotionApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
