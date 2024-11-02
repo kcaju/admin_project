@@ -150,8 +150,8 @@ class HomeView extends StatelessWidget {
                                   child: Container(
                                     height: 50,
                                     width: 80,
-                                    child: Assets.images.dogs
-                                        .image(fit: BoxFit.fill),
+                                    child: Assets.images.one
+                                        .image(fit: BoxFit.cover),
                                   ),
                                 ),
                               ),
@@ -163,7 +163,7 @@ class HomeView extends StatelessWidget {
                                     width: 80,
                                     height: 50,
                                     child: Assets.images.cat1
-                                        .image(fit: BoxFit.fill),
+                                        .image(fit: BoxFit.cover),
                                   ),
                                 ),
                               ),
@@ -175,7 +175,7 @@ class HomeView extends StatelessWidget {
                                     width: 80,
                                     height: 50,
                                     child: Assets.images.bird1
-                                        .image(fit: BoxFit.fill),
+                                        .image(fit: BoxFit.cover),
                                   ),
                                 ),
                               ),

@@ -48,17 +48,61 @@ class $AssetsImagesGen {
   /// File path: assets/images/bird1.jpg
   AssetGenImage get bird1 => const AssetGenImage('assets/images/bird1.jpg');
 
+  /// File path: assets/images/cage.png
+  AssetGenImage get cage => const AssetGenImage('assets/images/cage.png');
+
+  /// File path: assets/images/cart.png
+  AssetGenImage get cart => const AssetGenImage('assets/images/cart.png');
+
   /// File path: assets/images/cat1.jpg
   AssetGenImage get cat1 => const AssetGenImage('assets/images/cat1.jpg');
 
   /// File path: assets/images/dogs.jpg
   AssetGenImage get dogs => const AssetGenImage('assets/images/dogs.jpg');
 
+  /// File path: assets/images/foods.png
+  AssetGenImage get foods => const AssetGenImage('assets/images/foods.png');
+
+  /// File path: assets/images/home.png
+  AssetGenImage get home => const AssetGenImage('assets/images/home.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/medicines.png
+  AssetGenImage get medicines =>
+      const AssetGenImage('assets/images/medicines.png');
+
+  /// File path: assets/images/one.jpg
+  AssetGenImage get one => const AssetGenImage('assets/images/one.jpg');
+
+  /// File path: assets/images/orders.png
+  AssetGenImage get orders => const AssetGenImage('assets/images/orders.png');
+
+  /// File path: assets/images/petfoods.png
+  AssetGenImage get petfoods =>
+      const AssetGenImage('assets/images/petfoods.png');
+
+  /// File path: assets/images/petscart.png
+  AssetGenImage get petscart =>
+      const AssetGenImage('assets/images/petscart.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [bird1, cat1, dogs, logo];
+  List<AssetGenImage> get values => [
+        bird1,
+        cage,
+        cart,
+        cat1,
+        dogs,
+        foods,
+        home,
+        logo,
+        medicines,
+        one,
+        orders,
+        petfoods,
+        petscart
+      ];
 }
 
 class Assets {

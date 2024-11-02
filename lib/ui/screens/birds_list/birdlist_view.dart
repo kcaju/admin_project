@@ -15,9 +15,10 @@ class BirdlistView extends StatelessWidget {
       required this.birdData,
       required this.id,
       required this.url,
-      required this.breed});
+      required this.breed,
+      required this.category});
   final Map<String, dynamic> birdData;
-  final String id, url, breed;
+  final String id, url, breed, category;
 
   @override
   Widget build(BuildContext context) {
@@ -37,24 +38,36 @@ class BirdlistView extends StatelessWidget {
       builder: (context, viewModel, child) {
         return Scaffold(
           floatingActionButton: CustomFloatingbutton(
+            pet: birdData.breed,
             onPressed: () async {
               QuerySnapshot subdataSnapshot = await birdSubCollection.get();
               Map<String, Map<String, dynamic>> subdata = {
                 for (var doc in subdataSnapshot.docs)
                   doc.id: doc.data() as Map<String, dynamic>
               };
+              // Check if the breed in subdata is 'Love-Birds
+              bool isLovebird = false;
+              for (var data in subdata.values) {
+                if (data['breed'] == 'Love-Birds') {
+                  isLovebird = true;
+                  break;
+                }
+              }
 
               showModalBottomSheet(
-                backgroundColor: Palette.green,
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => AddPetsBottomsheet(
-                    collectionName: "Birdbreeds",
-                    subId: birdSubCollection.id,
-                    breed: birdData.breed,
-                    data: subdata,
-                    documentId: birdData.id),
-              );
+                  backgroundColor: Palette.green,
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return AddPetsBottomsheet(
+                        isLoveBird: isLovebird,
+                        category: birdData.category,
+                        collectionName: "Birdbreeds",
+                        subId: birdSubCollection.id,
+                        breed: birdData.breed,
+                        data: subdata,
+                        documentId: birdData.id);
+                  });
             },
           ),
           appBar: AppBar(
@@ -153,19 +166,82 @@ class BirdlistView extends StatelessWidget {
                                 viewModel.onTap(subData);
                               },
                               child: BirdTabView(
-                                  toEdit: () {
-                                    showModalBottomSheet(
-                                      backgroundColor: Palette.green,
-                                      isScrollControlled: true,
-                                      context: context,
-                                      builder: (context) => EditingBottomsheet(
+                                  toEdit: () async {
+                                    // Get the pet name to find the corresponding document in NewPets
+                                    String birdName = subData['name'];
+
+                                    // Query the NewPets collection for the document that matches the cat's name
+                                    QuerySnapshot newPetsSnapshot =
+                                        await newPets
+                                            .where('name', isEqualTo: birdName)
+                                            .get();
+
+                                    if (newPetsSnapshot.docs.isNotEmpty) {
+                                      // Assuming you want to take the first match (if multiple exist)
+                                      String newpetsId =
+                                          newPetsSnapshot.docs.first.id;
+                                      // Check if the breed is 'Love-Birds'
+                                      bool isLovebird =
+                                          subData['breed'] == 'Love-Birds';
+
+                                      showModalBottomSheet(
+                                        backgroundColor: Palette.green,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) =>
+                                            EditingBottomsheet(
+                                          isLoveBird: isLovebird,
+                                          newpetsId:
+                                              newpetsId, // Pass the retrieved newpetsId here
                                           collectionName: "Birdbreeds",
                                           subId:
                                               subCollectionDocuments[index].id,
                                           breed: birdData.breed,
                                           data: subData,
-                                          documentId: birdData.id),
-                                    );
+                                          documentId: birdData.id,
+                                        ),
+                                      );
+                                    } else {
+                                      // Check if the breed is 'Love-Birds'
+                                      bool isLovebird =
+                                          subData['breed'] == 'Love-Birds';
+
+                                      showModalBottomSheet(
+                                        backgroundColor: Palette.green,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) =>
+                                            EditingBottomsheet(
+                                          isLoveBird: isLovebird,
+                                          newpetsId: "",
+                                          collectionName: "Birdbreeds",
+                                          subId:
+                                              subCollectionDocuments[index].id,
+                                          breed: birdData.breed,
+                                          data: subData,
+                                          documentId: birdData.id,
+                                        ),
+                                      );
+                                    }
+                                    // DocumentSnapshot newPetsSnapshot =
+                                    //     await newPets.doc(newPets.id).get();
+                                    // // Check if the breed is 'Love-Birds'
+                                    // bool isLovebird =
+                                    //     subData['breed'] == 'Love-Birds';
+                                    // showModalBottomSheet(
+                                    //   backgroundColor: Palette.green,
+                                    //   isScrollControlled: true,
+                                    //   context: context,
+                                    //   builder: (context) => EditingBottomsheet(
+                                    //       newpetsId: newPetsSnapshot.id,
+                                    //       isLoveBird: isLovebird,
+                                    //       collectionName: "Birdbreeds",
+                                    //       subId:
+                                    //           subCollectionDocuments[index].id,
+                                    //       breed: birdData.breed,
+                                    //       data: subData,
+                                    //       documentId: birdData.id),
+                                    // );
                                   },
                                   toDelete: () async {
                                     // Reference to the specific document in NewPets that corresponds to the dog being deleted

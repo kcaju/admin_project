@@ -55,7 +55,7 @@ class BirdView extends StatelessWidget {
                         return InkWell(
                           onTap: () {
                             viewModel.navigate(data, documents[index].id,
-                                data['breed'], data['url']);
+                                data['breed'], data['url'], data['category']);
                           },
                           child: Container(
                             child: Column(

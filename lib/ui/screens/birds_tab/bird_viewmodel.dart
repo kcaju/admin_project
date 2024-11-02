@@ -25,10 +25,14 @@ class BirdViewmodel extends BaseViewModel {
       "breed": "Parrot"
     },
   ];
-  void navigate(
-      Map<String, dynamic> birdData, String id, String breed, String url) {
+  void navigate(Map<String, dynamic> birdData, String id, String breed,
+      String url, String category) {
     navigationService.navigateTo(Routes.birdlistView,
         arguments: BirdlistViewArguments(
-            birdData: birdData, id: id, url: url, breed: breed));
+            category: category,
+            birdData: birdData,
+            id: id,
+            url: url,
+            breed: breed));
   }
 }

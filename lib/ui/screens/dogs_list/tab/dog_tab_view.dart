@@ -16,7 +16,8 @@ class DogTabView extends StatelessWidget {
       this.toDelete});
   final String name, location, url;
   final num price;
-  final VoidCallback? toEdit, toDelete;
+  final VoidCallback? toEdit;
+  final VoidCallback? toDelete;
 
   @override
   Widget build(BuildContext context) {

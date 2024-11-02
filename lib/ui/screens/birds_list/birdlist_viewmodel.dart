@@ -10,6 +10,7 @@ class BirdlistViewmodel extends BaseViewModel {
             name: birdDetails['name'],
             color: birdDetails['color'],
             owner: birdDetails['owner'],
+            phone: birdDetails['phone'],
             desc: birdDetails['desc'],
             sex: birdDetails['sex'],
             location: birdDetails['location'],

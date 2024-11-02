@@ -15,9 +15,10 @@ class CatlistView extends StatelessWidget {
       required this.catData,
       required this.id,
       required this.url,
-      required this.breed});
+      required this.breed,
+      required this.category});
   final Map<String, dynamic> catData;
-  final String id, url, breed;
+  final String id, url, breed, category;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class CatlistView extends StatelessWidget {
       builder: (context, viewModel, child) {
         return Scaffold(
           floatingActionButton: CustomFloatingbutton(
+            pet: catData.breed,
             onPressed: () async {
               QuerySnapshot subdataSnapshot = await catSubCollection.get();
               Map<String, Map<String, dynamic>> subdata = {
@@ -48,6 +50,7 @@ class CatlistView extends StatelessWidget {
                 isScrollControlled: true,
                 context: context,
                 builder: (context) => AddPetsBottomsheet(
+                    category: catData.category,
                     collectionName: "Catbreeds",
                     subId: catSubCollection.id,
                     breed: catData.breed,
@@ -152,22 +155,73 @@ class CatlistView extends StatelessWidget {
                                 viewModel.onTap(subData);
                               },
                               child: CatTabView(
-                                  toEdit: () {
-                                    showModalBottomSheet(
-                                      backgroundColor: Palette.green,
-                                      isScrollControlled: true,
-                                      context: context,
-                                      builder: (context) => EditingBottomsheet(
+                                  toEdit: () async {
+                                    // Get the pet name to find the corresponding document in NewPets
+                                    String catName = subData['name'];
+
+                                    // Query the NewPets collection for the document that matches the cat's name
+                                    QuerySnapshot newPetsSnapshot =
+                                        await newPets
+                                            .where('name', isEqualTo: catName)
+                                            .get();
+
+                                    if (newPetsSnapshot.docs.isNotEmpty) {
+                                      // Assuming you want to take the first match (if multiple exist)
+                                      String newpetsId =
+                                          newPetsSnapshot.docs.first.id;
+
+                                      showModalBottomSheet(
+                                        backgroundColor: Palette.green,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) =>
+                                            EditingBottomsheet(
+                                          newpetsId:
+                                              newpetsId, // Pass the retrieved newpetsId here
                                           collectionName: "Catbreeds",
                                           subId:
                                               subCollectionDocuments[index].id,
                                           breed: catData.breed,
                                           data: subData,
-                                          documentId: catData.id),
-                                    );
+                                          documentId: catData.id,
+                                        ),
+                                      );
+                                    } else {
+                                      showModalBottomSheet(
+                                        backgroundColor: Palette.green,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) =>
+                                            EditingBottomsheet(
+                                          newpetsId: "",
+                                          collectionName: "Catbreeds",
+                                          subId:
+                                              subCollectionDocuments[index].id,
+                                          breed: catData.breed,
+                                          data: subData,
+                                          documentId: catData.id,
+                                        ),
+                                      );
+                                    }
+                                    // DocumentSnapshot newPetsSnapshot =
+                                    //     await newPets.doc(newPets.id).get();
+
+                                    // showModalBottomSheet(
+                                    //   backgroundColor: Palette.green,
+                                    //   isScrollControlled: true,
+                                    //   context: context,
+                                    //   builder: (context) => EditingBottomsheet(
+                                    //       newpetsId: newPetsSnapshot.id,
+                                    //       collectionName: "Catbreeds",
+                                    //       subId:
+                                    //           subCollectionDocuments[index].id,
+                                    //       breed: catData.breed,
+                                    //       data: subData,
+                                    //       documentId: catData.id),
+                                    // );
                                   },
                                   toDelete: () async {
-                                    // Reference to the specific document in NewPets that corresponds to the dog being deleted
+                                    // Reference to the specific document in NewPets that corresponds to the cat being deleted
                                     String catName = subData['name'];
                                     QuerySnapshot newPetsSnapshot =
                                         await newPets

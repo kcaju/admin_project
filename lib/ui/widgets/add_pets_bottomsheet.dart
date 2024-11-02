@@ -6,14 +6,18 @@ import 'package:flutter/material.dart';
 class AddPetsBottomsheet extends StatefulWidget {
   const AddPetsBottomsheet(
       {super.key,
+      this.isLoveBird = false,
       required this.data,
       required this.documentId,
       required this.breed,
       required this.subId,
-      this.collectionName});
+      this.collectionName,
+      required this.category,
+      this.isPhone = false});
   final Map<String, dynamic> data;
-  final String documentId, breed, subId;
+  final String documentId, breed, subId, category;
   final String? collectionName;
+  final bool isLoveBird, isPhone;
 
   @override
   State<AddPetsBottomsheet> createState() => _AddPetsBottomsheetState();
@@ -28,6 +32,7 @@ class _AddPetsBottomsheetState extends State<AddPetsBottomsheet> {
   TextEditingController location = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController url = TextEditingController();
+  TextEditingController phone = TextEditingController();
   final formkey = GlobalKey<FormState>();
   List<String> selectSex = ["male", 'female'];
   List<String> selectCategory = ["Dog", 'Cat', 'Bird'];
@@ -48,16 +53,30 @@ class _AddPetsBottomsheetState extends State<AddPetsBottomsheet> {
     'Love-Birds',
     'Dove'
   ];
+  String? pair;
   String? petCategory;
   String? chooseBreed;
   String? chooseSex;
-  Future<void> updateData() async {
+
+  @override
+  void initState() {
+    super.initState();
+    petCategory = widget.category;
+    chooseBreed = widget.breed;
+    // Set the pair variable based on the isBird property
+    pair = widget.isLoveBird ? 'pair' : '';
+    if (pair!.isNotEmpty) {
+      selectSex.add(pair!); // Add pair to selectSex if it's not empty
+    }
+  }
+
+  Future<void> addData() async {
     var newPets = FirebaseFirestore.instance.collection("NewPets");
-    var dogBreeds = FirebaseFirestore.instance
+    var allBreeds = FirebaseFirestore.instance
         .collection("${widget.collectionName}")
         .doc(widget.documentId)
         .collection(widget.breed.toLowerCase());
-    await dogBreeds.add({
+    await allBreeds.add({
       'name': petname.text,
       'location': location.text,
       'price': num.parse(price.text),
@@ -68,7 +87,8 @@ class _AddPetsBottomsheetState extends State<AddPetsBottomsheet> {
       'owner': ownername.text,
       'desc': desc.text,
       'breed': chooseBreed,
-      'category': petCategory
+      'category': petCategory,
+      'phone': phone.text,
     });
     await newPets.add({
       'name': petname.text,
@@ -81,16 +101,9 @@ class _AddPetsBottomsheetState extends State<AddPetsBottomsheet> {
       'owner': ownername.text,
       'desc': desc.text,
       'breed': chooseBreed,
-      'category': petCategory
+      'category': petCategory,
+      'phone': phone.text,
     });
-    Navigator.of(context).pop(); // Close the bottom sheet after updating
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Palette.blue,
-        content: Text(
-          "Data Added",
-          style: TextStyle(
-              color: Palette.black, fontWeight: FontWeight.bold, fontSize: 18),
-        )));
   }
 
   @override
@@ -107,7 +120,21 @@ class _AddPetsBottomsheetState extends State<AddPetsBottomsheet> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomTextfield(data: "Pet's name", controller: petname),
-                CustomTextfield(data: "Owner's name", controller: ownername),
+                Row(
+                  children: [
+                    Expanded(
+                        child: CustomTextfield(
+                            data: "Owner's name", controller: ownername)),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                        child: CustomTextfield(
+                            isPhone: true,
+                            data: "Phone number",
+                            controller: phone)),
+                  ],
+                ),
                 SizedBox(
                   height: 5,
                 ),
@@ -244,7 +271,18 @@ class _AddPetsBottomsheetState extends State<AddPetsBottomsheet> {
                   width: 200,
                   child: ElevatedButton(
                       onPressed: () {
-                        updateData();
+                        addData();
+                        Navigator.pop(
+                            context); // Close the bottom sheet after updating
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Palette.green1,
+                            content: Text(
+                              "Pet Added",
+                              style: TextStyle(
+                                  color: Palette.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            )));
                       },
                       style: ButtonStyle(
                           backgroundColor:

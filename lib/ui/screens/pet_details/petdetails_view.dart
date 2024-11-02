@@ -16,8 +16,9 @@ class PetdetailsView extends StatelessWidget {
       required this.location,
       required this.url,
       required this.price,
-      required this.age});
-  final String name, color, owner, desc, sex, location, url;
+      required this.age,
+      required this.phone});
+  final String name, color, owner, desc, sex, location, url, phone;
   final num price, age;
 
   @override
@@ -120,7 +121,7 @@ class PetdetailsView extends StatelessWidget {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: Palette.black,
-                                          fontSize: 25),
+                                          fontSize: 22),
                                     ),
                                   ],
                                 ),
@@ -262,9 +263,22 @@ class PetdetailsView extends StatelessWidget {
                                         )
                                       ],
                                     ),
+
                                     Spacer(),
+                                    Text(
+                                      phone,
+                                      style: TextStyle(
+                                          color: Palette.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
                                     CircleAvatar(
+                                      radius: 18,
                                       child: Icon(
+                                        size: 20,
                                         Icons.call,
                                       ),
                                     )

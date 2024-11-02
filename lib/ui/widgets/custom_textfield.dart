@@ -6,10 +6,12 @@ class CustomTextfield extends StatelessWidget {
       {super.key,
       required this.data,
       required this.controller,
-      this.maxlines = 1});
+      this.maxlines = 1,
+      this.isPhone = false});
   final String data;
   final TextEditingController controller;
   final int maxlines;
+  final bool isPhone;
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +19,25 @@ class CustomTextfield extends StatelessWidget {
       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
       maxLines: maxlines,
       controller: controller,
-      validator: (value) {
-        if (value != null && value.isNotEmpty) {
-          return null;
-        } else {
-          return "must fill";
-        }
-      },
+      validator: isPhone
+          ? (value) {
+              if (value != null && value.isNotEmpty) {
+                return null;
+              } else {
+                return "Must fill";
+              }
+            }
+          : (value) {
+              if (value != null && value.isNotEmpty && value.length == 10) {
+                return null;
+              } else {
+                return "Must fill";
+              }
+            },
       decoration: InputDecoration(
           label: Text(data),
           labelStyle: TextStyle(
-              color: Palette.black, fontWeight: FontWeight.w600, fontSize: 18)),
+              color: Palette.black, fontWeight: FontWeight.w600, fontSize: 22)),
     );
   }
 }

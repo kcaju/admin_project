@@ -9,6 +9,7 @@ class HomeViewmodel extends BaseViewModel {
             name: petDetails['name'],
             color: petDetails['color'],
             owner: petDetails['owner'],
+            phone: petDetails['phone'],
             desc: petDetails['desc'],
             sex: petDetails['sex'],
             location: petDetails['location'],

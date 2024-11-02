@@ -1,4 +1,5 @@
 import 'package:admin_project/constants/app_colors.dart';
+import 'package:admin_project/constants/assets.gen.dart';
 import 'package:admin_project/ui/screens/bottomnav/bottomnav_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -22,43 +23,40 @@ class BottomnavView extends StatelessWidget {
               type: BottomNavigationBarType.fixed,
               backgroundColor: Palette.first,
               selectedItemColor: Palette.black,
-              unselectedLabelStyle: TextStyle(fontSize: 14),
-              selectedLabelStyle: TextStyle(fontSize: 14),
+              unselectedLabelStyle:
+                  TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              selectedLabelStyle:
+                  TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               unselectedItemColor: Palette.grey,
               selectedFontSize: 10,
               unselectedFontSize: 10,
               currentIndex: viewModel.selectedIndex,
               items: [
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.home,
-                      size: 30,
-                    ),
-                    label: "Home"),
-                // BottomNavigationBarItem(
-                //     icon: Icon(
-                //       Icons.favorite,
-                //       size: 30,
-                //     ),
-                //     label: "Favourites"),
+                    icon: Assets.images.home.image(height: 35), label: "Home"),
+                BottomNavigationBarItem(
+                    icon: Assets.images.cart.image(height: 35),
+                    label: "Ordered Pets"),
                 // BottomNavigationBarItem(
                 //     icon: Icon(
                 //       Icons.sms,
                 //     ),
                 //     label: "chat"),
-
+                // BottomNavigationBarItem(
+                //     icon: Icon(
+                //       Icons.note_add,
+                //       size: 30,
+                //     ),
+                //     label: "Add Pets"),
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.note_add,
-                      size: 30,
-                    ),
-                    label: "Add Pets"),
+                    icon: Assets.images.petscart.image(height: 35),
+                    label: "Pet Suppplies"),
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.local_pharmacy,
-                      size: 30,
-                    ),
+                    icon: Assets.images.petfoods.image(height: 35),
                     label: "Add Supplies"),
+                BottomNavigationBarItem(
+                    icon: Assets.images.orders.image(height: 35),
+                    label: "Ordered Items"),
               ]),
         );
       },

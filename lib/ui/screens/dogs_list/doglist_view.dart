@@ -15,9 +15,10 @@ class DoglistView extends StatelessWidget {
       required this.dogData,
       required this.id,
       required this.url,
-      required this.breed});
+      required this.breed,
+      required this.category});
   final Map<String, dynamic> dogData;
-  final String id, url, breed;
+  final String id, url, breed, category;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class DoglistView extends StatelessWidget {
       builder: (context, viewModel, child) {
         return Scaffold(
           floatingActionButton: CustomFloatingbutton(
+            pet: dogData.breed,
             onPressed: () async {
               QuerySnapshot subdataSnapshot = await dogSubCollection.get();
               Map<String, Map<String, dynamic>> subdata = {
@@ -48,6 +50,7 @@ class DoglistView extends StatelessWidget {
                 isScrollControlled: true,
                 context: context,
                 builder: (context) => AddPetsBottomsheet(
+                    category: dogData.category,
                     collectionName: "Dogbreeds",
                     subId: dogSubCollection.id,
                     breed: dogData.breed,
@@ -152,19 +155,69 @@ class DoglistView extends StatelessWidget {
                                 viewModel.onTap(subData);
                               },
                               child: DogTabView(
-                                  toEdit: () {
-                                    showModalBottomSheet(
-                                      backgroundColor: Palette.green,
-                                      isScrollControlled: true,
-                                      context: context,
-                                      builder: (context) => EditingBottomsheet(
+                                  toEdit: () async {
+                                    // Get the pet name to find the corresponding document in NewPets
+                                    String dogName = subData['name'];
+
+                                    // Query the NewPets collection for the document that matches the dog's name
+                                    QuerySnapshot newPetsSnapshot =
+                                        await newPets
+                                            .where('name', isEqualTo: dogName)
+                                            .get();
+
+                                    if (newPetsSnapshot.docs.isNotEmpty) {
+                                      // Assuming you want to take the first match (if multiple exist)
+                                      String newpetsId =
+                                          newPetsSnapshot.docs.first.id;
+
+                                      showModalBottomSheet(
+                                        backgroundColor: Palette.green,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) =>
+                                            EditingBottomsheet(
+                                          newpetsId:
+                                              newpetsId, // Pass the retrieved newpetsId here
                                           collectionName: "Dogbreeds",
                                           subId:
                                               subCollectionDocuments[index].id,
                                           breed: dogData.breed,
                                           data: subData,
-                                          documentId: dogData.id),
-                                    );
+                                          documentId: dogData.id,
+                                        ),
+                                      );
+                                    } else {
+                                      showModalBottomSheet(
+                                        backgroundColor: Palette.green,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) =>
+                                            EditingBottomsheet(
+                                          newpetsId: "",
+                                          collectionName: "Dogbreeds",
+                                          subId:
+                                              subCollectionDocuments[index].id,
+                                          breed: dogData.breed,
+                                          data: subData,
+                                          documentId: dogData.id,
+                                        ),
+                                      );
+                                    }
+                                    // DocumentSnapshot newPetsSnapshot =
+                                    //     await newPets.doc(newPets.id).get();
+                                    // showModalBottomSheet(
+                                    //   backgroundColor: Palette.green,
+                                    //   isScrollControlled: true,
+                                    //   context: context,
+                                    //   builder: (context) => EditingBottomsheet(
+                                    //       newpetsId: newPetsSnapshot.id,
+                                    //       collectionName: "Dogbreeds",
+                                    //       subId:
+                                    //           subCollectionDocuments[index].id,
+                                    //       breed: dogData.breed,
+                                    //       data: subData,
+                                    //       documentId: dogData.id),
+                                    // );
                                   },
                                   toDelete: () async {
                                     // Reference to the specific document in NewPets that corresponds to the dog being deleted

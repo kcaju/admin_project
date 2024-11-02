@@ -6,14 +6,17 @@ import 'package:flutter/material.dart';
 class EditingBottomsheet extends StatefulWidget {
   const EditingBottomsheet(
       {super.key,
+      this.isLoveBird = false,
       required this.data,
       required this.documentId,
       required this.breed,
       required this.subId,
-      this.collectionName});
+      this.collectionName,
+      required this.newpetsId});
   final Map<String, dynamic> data;
-  final String documentId, breed, subId;
+  final String documentId, breed, subId, newpetsId;
   final String? collectionName;
+  final bool isLoveBird;
 
   @override
   State<EditingBottomsheet> createState() => _EditingBottomsheetState();
@@ -29,7 +32,10 @@ class _EditingBottomsheetState extends State<EditingBottomsheet> {
   TextEditingController price = TextEditingController();
   TextEditingController sex = TextEditingController();
   TextEditingController url = TextEditingController();
+  TextEditingController phone = TextEditingController();
+
   final formkey = GlobalKey<FormState>();
+  String? pair;
   List<String> selectSex = ["male", 'female'];
   List<String> selectCategory = ["Dog", 'Cat', 'Bird'];
   List<String> selectBreed = [
@@ -54,7 +60,6 @@ class _EditingBottomsheetState extends State<EditingBottomsheet> {
   String? chooseSex;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     petname.text = widget.data['name'];
     ownername.text = widget.data['owner'];
@@ -67,14 +72,22 @@ class _EditingBottomsheetState extends State<EditingBottomsheet> {
     url.text = widget.data['url'];
     petCategory = widget.data['category'];
     chooseBreed = widget.data['breed'];
+    phone.text = widget.data['phone'];
+    // Set the pair variable based on the isBird property
+    pair = widget.isLoveBird ? 'pair' : '';
+    if (pair!.isNotEmpty) {
+      selectSex.add(pair!); // Add pair to selectSex if it's not empty
+    }
   }
 
   Future<void> updateData() async {
-    var dogBreeds = FirebaseFirestore.instance
+    var newPets = FirebaseFirestore.instance.collection("NewPets");
+
+    var allBreeds = FirebaseFirestore.instance
         .collection("${widget.collectionName}")
         .doc(widget.documentId)
         .collection(widget.breed.toLowerCase());
-    await dogBreeds.doc(widget.subId).update({
+    await allBreeds.doc(widget.subId).update({
       'name': petname.text,
       'location': location.text,
       'price': num.parse(price.text),
@@ -85,16 +98,23 @@ class _EditingBottomsheetState extends State<EditingBottomsheet> {
       'owner': ownername.text,
       'desc': desc.text,
       'breed': chooseBreed,
-      'category': petCategory
+      'category': petCategory,
+      'phone': phone.text,
     });
-    Navigator.of(context).pop(); // Close the bottom sheet after updating
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Palette.blue,
-        content: Text(
-          "Data Updated",
-          style: TextStyle(
-              color: Palette.black, fontWeight: FontWeight.bold, fontSize: 18),
-        )));
+    await newPets.doc(widget.newpetsId).update({
+      'name': petname.text,
+      'location': location.text,
+      'price': num.parse(price.text),
+      'age': num.parse(age.text),
+      'sex': chooseSex,
+      'color': color.text,
+      'url': url.text,
+      'owner': ownername.text,
+      'desc': desc.text,
+      'breed': chooseBreed,
+      'category': petCategory,
+      'phone': phone.text,
+    });
   }
 
   @override
@@ -111,7 +131,21 @@ class _EditingBottomsheetState extends State<EditingBottomsheet> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomTextfield(data: "Pet's name", controller: petname),
-                CustomTextfield(data: "Owner's name", controller: ownername),
+                Row(
+                  children: [
+                    Expanded(
+                        child: CustomTextfield(
+                            data: "Owner's name", controller: ownername)),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                        child: CustomTextfield(
+                            isPhone: true,
+                            data: "Phone number",
+                            controller: phone)),
+                  ],
+                ),
                 SizedBox(
                   height: 5,
                 ),
@@ -249,6 +283,17 @@ class _EditingBottomsheetState extends State<EditingBottomsheet> {
                   child: ElevatedButton(
                       onPressed: () {
                         updateData();
+                        Navigator.pop(
+                            context); // Close the bottom sheet after updating
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Palette.green1,
+                            content: Text(
+                              "Data Updated",
+                              style: TextStyle(
+                                  color: Palette.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            )));
                       },
                       style: ButtonStyle(
                           backgroundColor:

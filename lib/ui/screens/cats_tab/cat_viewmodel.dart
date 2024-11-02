@@ -28,10 +28,14 @@ class CatViewmodel extends BaseViewModel {
       "breed": "American Wirehair"
     },
   ];
-  void navigate(
-      Map<String, dynamic> catData, String id, String breed, String url) {
+  void navigate(Map<String, dynamic> catData, String id, String breed,
+      String url, String category) {
     navigationService.navigateTo(Routes.catlistView,
         arguments: CatlistViewArguments(
-            catData: catData, id: id, url: url, breed: breed));
+            category: category,
+            catData: catData,
+            id: id,
+            url: url,
+            breed: breed));
   }
 }

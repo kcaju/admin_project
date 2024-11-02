@@ -9,6 +9,7 @@ class CatlistViewmodel extends BaseViewModel {
         arguments: PetdetailsViewArguments(
             name: catDetails['name'],
             color: catDetails['color'],
+            phone: catDetails['phone'],
             owner: catDetails['owner'],
             desc: catDetails['desc'],
             sex: catDetails['sex'],

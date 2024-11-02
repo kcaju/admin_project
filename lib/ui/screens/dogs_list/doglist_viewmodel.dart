@@ -9,6 +9,7 @@ class DoglistViewmodel extends BaseViewModel {
         arguments: PetdetailsViewArguments(
             name: dogDetails['name'],
             color: dogDetails['color'],
+            phone: dogDetails['phone'],
             owner: dogDetails['owner'],
             desc: dogDetails['desc'],
             sex: dogDetails['sex'],
